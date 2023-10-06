@@ -20,5 +20,15 @@
     grid-area: sidebar;
     background-color: aqua;
     display: grid;
-    grid-template-rows: auto;
+    align-content: center;
+    justify-content: center;
+}
+
+.form {
+    height: 250px;
+}
+
+form {
+    display: grid;
+    gap: 20px;
 }
