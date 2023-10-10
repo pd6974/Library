@@ -14,6 +14,8 @@
 .main {
     grid-area: main;
     background-color: navajowhite;
+    display: grid;
+    gap: 15px;
 }
 
 .sidebar {
@@ -22,6 +24,7 @@
     display: grid;
     align-content: center;
     justify-content: center;
+    gap: 25px;
 }
 
 .form {
@@ -31,4 +34,10 @@
 form {
     display: grid;
     gap: 20px;
+}
+
+.gridDiv {
+    background-color: brown;
+    height: 250px;
+    width: auto;
 }
