@@ -1,9 +1,3 @@
-
-//library length and main section to display books
-const libLength = myLibrary.length;
-const main = document.querySelector('.main');
-const formDiv = document.querySelector('.form')
-
 //variale to access form button
 const formButton = document.querySelector('.formButton');
 formButton.addEventListener('click', () => {
@@ -29,6 +23,11 @@ const myLibrary = [
     }
 ];
 
+//library length and main section to display books
+const libLength = myLibrary.length;
+const main = document.querySelector('.main');
+const formDiv = document.querySelector('.form')
+
 
 
 displayLibrary();
@@ -43,8 +42,8 @@ function Book(title, author, genre) {
 
 }
 
-function displayForm {
-
+function displayForm() {
+    formDiv.removeAttribute("hidden");
 }
 
 
