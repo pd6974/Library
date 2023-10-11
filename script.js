@@ -1,4 +1,4 @@
-//variale to access form button
+//variale to access form dislpay button
 const formButton = document.querySelector('.formButton');
 formButton.addEventListener('click', () => {
     displayForm();
@@ -27,11 +27,20 @@ const myLibrary = [
 const libLength = myLibrary.length;
 const main = document.querySelector('.main');
 const formDiv = document.querySelector('.form')
+const submit = document.querySelector('.submit')
 
+submit.addEventListener('click', processForm)
 
 
 displayLibrary();
 
+ function processForm(event) {
+    event.preventDefault();
+    const form = document.querySelector('form');
+    const data = Object.fromEntries(new FormData(form).entries());
+    console.log(data);
+    console.log("clicked");
+} 
 
 function Book(title, author, genre) {
     this.title = title;
