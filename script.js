@@ -23,32 +23,35 @@ const myLibrary = [
     }
 ];
 
+
+
 //library length and main section to display books
-const libLength = myLibrary.length;
 const main = document.querySelector('.main');
-const formDiv = document.querySelector('.form')
-const submit = document.querySelector('.submit')
 
-submit.addEventListener('click', processForm)
+//access and display form
+const formDiv = document.querySelector('.form');
+const submit = document.querySelector('.submit');
+submit.addEventListener('click', processForm);
 
-
+//displays books in main section
 displayLibrary();
 
+
+//takes form entries and puts them into the array
  function processForm(event) {
     event.preventDefault();
     const form = document.querySelector('form');
     const data = Object.fromEntries(new FormData(form).entries());
-    console.log(data);
-    console.log("clicked");
+    addBookToLibrary(new Book(data.Title, data.Author, data.Genre, data.Pages, data.Read));    
 } 
 
-function Book(title, author, genre) {
+function Book(title, author, genre, pages, read) {
     this.title = title;
     this.author = author;
     this.genre = genre;
     this.pages = pages;
     this.read = read;
-
+    return {title, author, genre, pages, read};
 }
 
 function displayForm() {
@@ -58,6 +61,7 @@ function displayForm() {
 
 //function to display library
 function displayLibrary() {
+    const libLength = myLibrary.length;
     for (let i = 0; i < libLength; i++) {
         const gridDiv = document.createElement('div');
         main.appendChild(gridDiv);
@@ -65,14 +69,22 @@ function displayLibrary() {
         for (const property in myLibrary[i]) {
             var p = document.createElement('p');
             gridDiv.appendChild(p);
-            p.textContent += `${myLibrary[i][property]}`
-
-        }
-            
+            if (myLibrary[i][property] == true) {
+                p.textContent += "Read"
+            } else if (myLibrary[i][property] == false) {
+                p.textContent += "Not Read"
+            } else {
+                p.textContent += `${myLibrary[i][property]}`
+                }
+        }      
     }
-
 }
 
-function addBookToLibrary() {
+//adds book information to the array
+function addBookToLibrary(a) {
+    
+    myLibrary.push(a)
+    console.log(myLibrary)
+    displayLibrary();
 
 }
