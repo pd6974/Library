@@ -1,10 +1,3 @@
-//variale to access form dislpay button
-const formButton = document.querySelector('.formButton');
-formButton.addEventListener('click', () => {
-    displayForm();
-})
-
-
 const myLibrary = [
     {
     title: "The Hobbit",
@@ -21,20 +14,35 @@ const myLibrary = [
     pages: "368",
     read: true
     }
+    
 ];
-
 
 
 //library length and main section to display books
 const main = document.querySelector('.main');
 
+//displays books in main section
+displayLibrary();
+
 //access and display form
+const formButton = document.querySelector('.formButton');
+formButton.addEventListener('click', () => {
+    displayForm();
+})
+
+//process the form
 const formDiv = document.querySelector('.form');
 const submit = document.querySelector('.submit');
 submit.addEventListener('click', processForm);
 
-//displays books in main section
-displayLibrary();
+//delete button
+const deleteButton = document.querySelectorAll('.delete');
+deleteButton.forEach(deleteButton => deleteButton.addEventListener('click', displayCat(deleteButton)
+));
+
+function displayCat(a) {
+    console.log(a.dataset.catalogue);
+} 
 
 
 //takes form entries and puts them into the array
@@ -44,6 +52,8 @@ displayLibrary();
     const data = Object.fromEntries(new FormData(form).entries());
     addBookToLibrary(new Book(data.Title, data.Author, data.Genre, data.Pages, data.Read));    
 } 
+
+
 
 function Book(title, author, genre, pages, read) {
     this.title = title;
@@ -76,7 +86,13 @@ function displayLibrary() {
             } else {
                 p.textContent += `${myLibrary[i][property]}`
                 }
-        }      
+        }   
+        const button = document.createElement('button');
+        gridDiv.appendChild(button);
+        button.classList.add('delete');
+        button.dataset.catalogue = i;
+        button.textContent = "Delete";
+
     }
 }
 
@@ -85,6 +101,23 @@ function addBookToLibrary(a) {
     
     myLibrary.push(a)
     console.log(myLibrary)
-    displayLibrary();
-
-}
+    const gridDiv = document.createElement('div');
+    main.appendChild(gridDiv);
+    gridDiv.classList.add('gridDiv');
+    gridDiv.dataset.catalogue = myLibrary.length - 1;
+    for (const property in a) {
+            var p = document.createElement('p');
+            gridDiv.appendChild(p);
+            if (a[property] == true) {
+                p.textContent += "Read"
+            } else if (a[property] == false) {
+                p.textContent += "Not Read"
+            } else {
+                p.textContent += `${a[property]}`
+                }
+        }  
+        const button = document.createElement('button');
+        gridDiv.appendChild(button);
+        button.classList.add('delete');
+        button.textContent = "Delete";    
+    }
