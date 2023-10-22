@@ -44,27 +44,14 @@ deleteButton.forEach(deleteButton => deleteButton.addEventListener('click', () =
     for (i = 0; i < divs.length; i++) {
         if (divs[i].dataset.catalogue == deleteButton.dataset.catalogue){
             divs[i].remove();
+            myLibrary.splice(i, 1);
 
         }
     }
+
+    console.log(myLibrary);
 }
 )); 
-
-//read button
-const readButton = document.querySelectorAll('.Read');
-readButton.forEach(readButton => readButton.addEventListener('click', () =>
-{
-    if (readButton.parentElement.textContent === "Not ReadRead") {
-        console.log('loved it')
-        readButton.parentElement.textContent = "Read";
-    } else if (readButton.parentElement.textContent === "ReadNot Read") {
-        console.log('hated it')
-        readButton.parentElement.textContent = "Not Read";
-    }
-    console.log(readButton.parentElement.textContent);
-}
-));
-
 
 
 const checkbox = document.querySelectorAll('input[type="checkbox"]')
@@ -80,13 +67,20 @@ checkbox.forEach(checkbox => checkbox.addEventListener('click', () =>
         console.log(myLibrary);
     }
 }
-))
+));
 
 //takes form entries and puts them into the array
  function processForm(event) {
     event.preventDefault();
     const form = document.querySelector('form');
     const data = Object.fromEntries(new FormData(form).entries());
+    console.log(data);
+    console.log(data.Read);
+    if (data.Read == "Read") {
+        data.Read = true;
+    } else {
+        data.Read = false;
+    }
     addBookToLibrary(new Book(data.Title, data.Author, data.Genre, data.Pages, data.Read));    
 } 
 
@@ -176,6 +170,7 @@ function addBookToLibrary(a) {
     
     myLibrary.push(a)
     console.log(myLibrary)
+
     const gridDiv = document.createElement('div');
     main.appendChild(gridDiv);
     gridDiv.classList.add('gridDiv');
@@ -184,27 +179,31 @@ function addBookToLibrary(a) {
     for (const property in a) {
             var p = document.createElement('p');
             gridDiv.appendChild(p);
+            const label = document.createElement('label');
+            const input = document.createElement('input');
 
             if (a[property] == true) {
-                p.textContent += "Read"
-                const label = document.createElement('label');
+                p.textContent += "Read?"
+                label.dataset.catalogue = gridDiv.dataset.catalogue;
                 p.appendChild(label);
                 label.classList.add('switch');
-                const newLabel = document.querySelector('.switch');
-                const input = document.createElement('input');
+                const newLabel = document.querySelector("label[data-catalogue=" + CSS.escape(gridDiv.dataset.catalogue) + "]"); 
+                console.log(newLabel);
                 newLabel.appendChild(input);
-                input.setAttribute(type, checkbox);
-                const span = document.createElement(span);
-                newLabel.appendChild(span)
-                span.classList.add('slider round')
+                input.setAttribute('type', 'checkbox');
+                input.click();
 
             
             } else if (a[property] == false) {
-                p.textContent += "Not Read"
-                const button = document.createElement('button');
-                p.appendChild(button);
-                button.classList.add('Read');
-                button.textContent += "Read"
+                p.textContent += "Read?"
+                label.dataset.catalogue = gridDiv.dataset.catalogue;
+                p.appendChild(label);
+                label.classList.add('switch');
+                const newLabel = document.querySelector("label[data-catalogue=" + CSS.escape(gridDiv.dataset.catalogue) + "]");
+                console.log(newLabel);
+                newLabel.appendChild(input);
+                input.setAttribute('type', 'checkbox');
+
             } else {
                 p.textContent += `${a[property]}`
                 }
