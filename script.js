@@ -35,15 +35,54 @@ const formDiv = document.querySelector('.form');
 const submit = document.querySelector('.submit');
 submit.addEventListener('click', processForm);
 
+
 //delete button
 const deleteButton = document.querySelectorAll('.delete');
-deleteButton.forEach(deleteButton => deleteButton.addEventListener('click', displayCat(deleteButton)
+deleteButton.forEach(deleteButton => deleteButton.addEventListener('click', () =>
+{
+    const divs = document.querySelectorAll('.gridDiv');
+    for (i = 0; i < divs.length; i++) {
+        if (divs[i].dataset.catalogue == deleteButton.dataset.catalogue){
+            divs[i].remove();
+
+        }
+    }
+}
+)); 
+
+//read button
+const readButton = document.querySelectorAll('.Read');
+readButton.forEach(readButton => readButton.addEventListener('click', () =>
+{
+    if (readButton.parentElement.textContent === "Not ReadRead") {
+        console.log('loved it')
+        readButton.parentElement.textContent = "Read";
+    } else if (readButton.parentElement.textContent === "ReadNot Read") {
+        console.log('hated it')
+        readButton.parentElement.textContent = "Not Read";
+    }
+    console.log(readButton.parentElement.textContent);
+}
 ));
 
-function displayCat(a) {
-    console.log(a.dataset.catalogue);
-} 
 
+
+const checkbox = document.querySelectorAll('input[type="checkbox"]')
+checkbox.forEach(checkbox => checkbox.addEventListener('click', () =>
+{
+    if (checkbox.checked) {
+        const location = checkbox.parentElement.dataset.catalogue;
+        myLibrary[location][read] = true;
+        console.log(myLibrary);
+    } else {
+        const location = checkbox.parentElement.dataset.catalogue;
+        console.log(myLibrary[location][read]);
+        myLibrary[location][read] = true;
+        
+        console.log(myLibrary);
+    }
+}
+))
 
 //takes form entries and puts them into the array
  function processForm(event) {
@@ -64,6 +103,22 @@ function Book(title, author, genre, pages, read) {
     return {title, author, genre, pages, read};
 }
 
+//change the read status in library
+function updateRead(id, update) {
+    
+}
+
+function changeDesc( value, desc ) {
+    for (var i in projects) {
+      if (projects[i].value == value) {
+         projects[i].desc = desc;
+         break; //Stop this loop, we found it!
+      }
+    }
+ }
+
+
+//brings up the form
 function displayForm() {
     formDiv.removeAttribute("hidden");
 }
@@ -73,16 +128,38 @@ function displayForm() {
 function displayLibrary() {
     const libLength = myLibrary.length;
     for (let i = 0; i < libLength; i++) {
+        
         const gridDiv = document.createElement('div');
         main.appendChild(gridDiv);
         gridDiv.classList.add('gridDiv');
+        gridDiv.dataset.catalogue = i;
+        
         for (const property in myLibrary[i]) {
+
             var p = document.createElement('p');
             gridDiv.appendChild(p);
+            const label = document.createElement('label');
+            const input = document.createElement('input');
+
             if (myLibrary[i][property] == true) {
-                p.textContent += "Read"
+                p.textContent += "Read?"
+                label.dataset.catalogue = i;
+                p.appendChild(label);
+                label.classList.add('switch');
+                const newLabel = document.querySelector("label[data-catalogue=" + CSS.escape(i) + "]"); 
+                console.log(newLabel);
+                newLabel.appendChild(input);
+                input.setAttribute('type', 'checkbox');
+                input.click();
             } else if (myLibrary[i][property] == false) {
-                p.textContent += "Not Read"
+                p.textContent += "Read?"
+                label.dataset.catalogue = i;
+                p.appendChild(label);
+                label.classList.add('switch');
+                const newLabel = document.querySelector("label[data-catalogue=" + CSS.escape(i) + "]");
+                console.log(newLabel);
+                newLabel.appendChild(input);
+                input.setAttribute('type', 'checkbox');
             } else {
                 p.textContent += `${myLibrary[i][property]}`
                 }
@@ -105,13 +182,31 @@ function addBookToLibrary(a) {
     main.appendChild(gridDiv);
     gridDiv.classList.add('gridDiv');
     gridDiv.dataset.catalogue = myLibrary.length - 1;
+
     for (const property in a) {
             var p = document.createElement('p');
             gridDiv.appendChild(p);
+
             if (a[property] == true) {
                 p.textContent += "Read"
+                const label = document.createElement('label');
+                p.appendChild(label);
+                label.classList.add('switch');
+                const newLabel = document.querySelector('.switch');
+                const input = document.createElement('input');
+                newLabel.appendChild(input);
+                input.setAttribute(type, checkbox);
+                const span = document.createElement(span);
+                newLabel.appendChild(span)
+                span.classList.add('slider round')
+
+            
             } else if (a[property] == false) {
                 p.textContent += "Not Read"
+                const button = document.createElement('button');
+                p.appendChild(button);
+                button.classList.add('Read');
+                button.textContent += "Read"
             } else {
                 p.textContent += `${a[property]}`
                 }
@@ -119,5 +214,6 @@ function addBookToLibrary(a) {
         const button = document.createElement('button');
         gridDiv.appendChild(button);
         button.classList.add('delete');
+        gridDiv.dataset.catalogue = myLibrary.length - 1;
         button.textContent = "Delete";    
     }
