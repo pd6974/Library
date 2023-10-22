@@ -55,19 +55,7 @@ deleteButton.forEach(deleteButton => deleteButton.addEventListener('click', () =
 
 
 const checkbox = document.querySelectorAll('input[type="checkbox"]')
-checkbox.forEach(checkbox => checkbox.addEventListener('click', () =>
-{
-    if (checkbox.checked) {
-        const location = checkbox.parentElement.dataset.catalogue;
-        myLibrary[location].read = true;
-        console.log(myLibrary);
-    } else {
-        const location = checkbox.parentElement.dataset.catalogue;
-        myLibrary[location].read = false;
-        console.log(myLibrary);
-    }
-}
-));
+checkbox.forEach(checkbox => checkbox.addEventListener('click', updateRead(checkbox)));
 
 //takes form entries and puts them into the array
  function processForm(event) {
@@ -96,18 +84,21 @@ function Book(title, author, genre, pages, read) {
 }
 
 //change the read status in library
-function updateRead(id, update) {
-    
+function updateRead(a) {
+
+    console.log(a);
+    if (a.checked) {
+        const location = a.parentElement.dataset.catalogue;
+        myLibrary[location].read = true;
+        console.log(myLibrary);
+    } else {
+        const location = a.parentElement.dataset.catalogue;
+        myLibrary[location].read = false;
+        console.log(myLibrary);
+    }
 }
 
-function changeDesc( value, desc ) {
-    for (var i in projects) {
-      if (projects[i].value == value) {
-         projects[i].desc = desc;
-         break; //Stop this loop, we found it!
-      }
-    }
- }
+
 
 
 //brings up the form
@@ -143,6 +134,8 @@ function displayLibrary() {
                 newLabel.appendChild(input);
                 input.setAttribute('type', 'checkbox');
                 input.click();
+                input.addEventListener('click', updateRead(input));
+
             } else if (myLibrary[i][property] == false) {
                 p.textContent += "Read?"
                 label.dataset.catalogue = i;
@@ -152,6 +145,8 @@ function displayLibrary() {
                 console.log(newLabel);
                 newLabel.appendChild(input);
                 input.setAttribute('type', 'checkbox');
+                input.addEventListener('click', updateRead(input));
+
             } else {
                 p.textContent += `${myLibrary[i][property]}`
                 }
@@ -192,6 +187,7 @@ function addBookToLibrary(a) {
                 newLabel.appendChild(input);
                 input.setAttribute('type', 'checkbox');
                 input.click();
+                input.addEventListener('click', updateRead(input));
 
             
             } else if (a[property] == false) {
@@ -203,6 +199,7 @@ function addBookToLibrary(a) {
                 console.log(newLabel);
                 newLabel.appendChild(input);
                 input.setAttribute('type', 'checkbox');
+                input.addEventListener('click', updateRead(input));
 
             } else {
                 p.textContent += `${a[property]}`
