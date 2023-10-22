@@ -72,13 +72,11 @@ checkbox.forEach(checkbox => checkbox.addEventListener('click', () =>
 {
     if (checkbox.checked) {
         const location = checkbox.parentElement.dataset.catalogue;
-        myLibrary[location][read] = true;
+        myLibrary[location].read = true;
         console.log(myLibrary);
     } else {
         const location = checkbox.parentElement.dataset.catalogue;
-        console.log(myLibrary[location][read]);
-        myLibrary[location][read] = true;
-        
+        myLibrary[location].read = false;
         console.log(myLibrary);
     }
 }
