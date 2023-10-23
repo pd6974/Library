@@ -55,7 +55,9 @@ deleteButton.forEach(deleteButton => deleteButton.addEventListener('click', () =
 
 
 const checkbox = document.querySelectorAll('input[type="checkbox"]')
-checkbox.forEach(checkbox => checkbox.addEventListener('click', updateRead(checkbox)));
+checkbox.forEach(checkbox => checkbox.addEventListener('click', () =>
+{updateRead(checkbox);}
+));
 
 //takes form entries and puts them into the array
  function processForm(event) {
@@ -187,7 +189,8 @@ function addBookToLibrary(a) {
                 newLabel.appendChild(input);
                 input.setAttribute('type', 'checkbox');
                 input.click();
-                input.addEventListener('click', updateRead(input));
+                input.addEventListener('click', () =>
+                {updateRead(input)});
 
             
             } else if (a[property] == false) {
@@ -199,7 +202,8 @@ function addBookToLibrary(a) {
                 console.log(newLabel);
                 newLabel.appendChild(input);
                 input.setAttribute('type', 'checkbox');
-                input.addEventListener('click', updateRead(input));
+                input.addEventListener('click', () =>
+                {updateRead(input)});
 
             } else {
                 p.textContent += `${a[property]}`
