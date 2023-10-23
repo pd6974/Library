@@ -93,9 +93,11 @@ function deleteDiv(a) {
 
         }
     }
-
-    for (i = 0; i < divs.length - 1; i++) {
-        divs[i].dataset.catalogue = i;
+    
+    const divRemain = document.querySelectorAll('.gridDiv')
+    console.log(divRemain)
+    for (i = 0; i < divRemain.length; i++) {
+        divRemain[i].dataset.catalogue = i;
     }
 
     console.log(myLibrary);
