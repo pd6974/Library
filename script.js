@@ -21,10 +21,10 @@ const myLibrary = [
 //library length and main section to display books
 const main = document.querySelector('.main');
 
-//displays books in main section
+//displays preloaded books in the main section
 displayLibrary();
 
-//access and display form
+//display form
 const formButton = document.querySelector('.formButton');
 formButton.addEventListener('click', () => {
     displayForm();
@@ -42,11 +42,12 @@ deleteButton.forEach(deleteButton => deleteButton.addEventListener('click', () =
 {deleteDiv(deleteButton);}
 )); 
 
-
+//updates the read status from checkboxes
 const checkbox = document.querySelectorAll('input[type="checkbox"]')
 checkbox.forEach(checkbox => checkbox.addEventListener('click', () =>
 {updateRead(checkbox);}
 ));
+
 
 //takes form entries and puts them into the array
  function processForm(event) {
@@ -83,6 +84,7 @@ function updateRead(a) {
     }
 }
 
+//Deletes div from main section & array (also reorganizes the dataset ids)
 function deleteDiv(a) {
 
     const divs = document.querySelectorAll('.gridDiv');
@@ -112,7 +114,7 @@ function displayForm() {
 }
 
 
-//function to display library
+//function to display preexisting books in the library
 function displayLibrary() {
     const libLength = myLibrary.length;
     for (let i = 0; i < libLength; i++) {
